@@ -1,4 +1,4 @@
-module Revere
+module Cosell
   class AnnouncementArray < Array
   end
 end

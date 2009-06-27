@@ -1,5 +1,5 @@
 
-module Revere
+module Cosell
 
   # :stopdoc:
   VERSION = '1.0.0'
@@ -42,8 +42,8 @@ module Revere
     Dir.glob(search_me).sort.each {|rb| require rb}
   end
 
-end  # module Revere
+end  # module Cosell
 
-Revere.require_all_libs_relative_to(__FILE__)
+Cosell.require_all_libs_relative_to(__FILE__)
 
 # EOF

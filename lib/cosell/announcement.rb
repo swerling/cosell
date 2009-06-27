@@ -1,4 +1,4 @@
-module Revere
+module Cosell
   module Announcement
     def announcement?
       false

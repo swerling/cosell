@@ -1,4 +1,4 @@
-revere
+cosell
     by Steven Swerling
     http://tab-a.slot-z.net
 
@@ -16,11 +16,11 @@ Pedigree
   This implementation is a port to Ruby of Lukas Regnggli's tweak of Colin Putney's Squeak implementation of Vassili
   Bykov's Announcements framework for VisualWorks Smalltalk.
 
-The Name 'Revere'
+The Name 'Cosell'
 
-  I chose the name 'Revere' because 
+  I chose the name 'Cosell' because 
 
-  a) Paul Revere is famous for his event notification prowess 
+  a) Howard Cosell is famous for his event notification prowess 
   b) Googling for 'Ruby Announcements', 'Ruby Event Announcements', etc., produced scads of results about ruby
      meetups, conferences, and the like. So I went with something a bit cryptic but hopefully a little more searchable. 
 
@@ -46,7 +46,7 @@ See:
 
 == INSTALL:
 
-* gem install revere TODO(ref to github)
+* gem install cosell TODO(ref to github)
 
 == LICENSE:
 

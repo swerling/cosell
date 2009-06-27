@@ -1,4 +1,4 @@
-require File.join(File.dirname(__FILE__), '../lib/revere')
+require File.join(File.dirname(__FILE__), '../lib/cosell')
 
 Spec::Runner.configure do |config|
   # == Mock Framework

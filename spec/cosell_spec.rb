@@ -3,19 +3,19 @@ require File.join(File.dirname(__FILE__), 'spec_helper')
 #
 # A few mock announcments
 #
-class; AnnouncementMockA < Revere::Announcement; end
-class; AnnouncementMockB < Revere::Announcement; end
+class; AnnouncementMockA < Cosell::Announcement; end
+class; AnnouncementMockB < Cosell::Announcement; end
 class; AnnouncementMockC < AnnouncementMockB; end
 
 #
 # A class whose objects can act as announcers
 #
-class AnyOldClass; include Revere::Announcer; end
+class AnyOldClass; include Cosell::Announcer; end
 
 #
 # The tests
 #
-describe Revere do
+describe Cosell do
 
   before(:each) do
     @announcer = AnyOldClass.new
