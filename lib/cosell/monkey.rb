@@ -1,8 +1,16 @@
 class Object
-  def announcement?
-    false
+
+  def as_announcement
+    return self
   end
-  def acts_as_announcer
-    raise 'todo: implement class method "handles:"'
+
+  def self.as_announcement
+    new_inst = self.allocate rescue nil
+    raise "Cannot create an announcement out of #{self}. Please implement 'as_announcement' as a class method of #{self}." if new_inst.nil?
+    new_inst
   end
+
 end
+
+
+

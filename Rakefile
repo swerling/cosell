@@ -14,16 +14,16 @@ rescue LoadError
 end
 
 ensure_in_path 'lib'
-require 'revere'
+require 'cosell'
 
 task :default => 'spec:run'
 
-PROJ.name = 'revere'
+PROJ.name = 'cosell'
 PROJ.authors = 'FIXME (who is writing this software)'
 PROJ.email = 'FIXME (your e-mail)'
 PROJ.url = 'FIXME (project homepage)'
-PROJ.version = Revere::VERSION
-PROJ.rubyforge.name = 'revere'
+PROJ.version = Cosell::VERSION
+PROJ.rubyforge.name = 'cosell'
 
 PROJ.spec.opts << '--color'
 
