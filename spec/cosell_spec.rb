@@ -1,16 +1,18 @@
 require File.join(File.dirname(__FILE__), 'spec_helper')
 
 #
-# A few mock announcments
+# A few announcments
 #
-class AnnouncementA; end
-class AnnouncementB; end
-class AnnouncementC < AnnouncementB; end
+class AWordFromOurSponsor
+  attr_accessor :word
+end
+class KnockOut; end
+class TKO < KnockOut; end
 
 #
 # A class whose objects can act as announcers
 #
-class AnyOldClass; include Cosell::Announcer; end
+class AnyOldClass; include Cosell; end
 
 #
 # The tests
@@ -21,65 +23,89 @@ describe Cosell do
     @announcer = AnyOldClass.new
   end
 
-  it "should create announcement from class if needed" do
-    @announcer.announce(AnnouncementA).class.should == AnnouncementA
-    @announcer.announce(AnnouncementA.new).class.should == AnnouncementA
+  it "should instantiate announcement instance from class if needed" do
+    @announcer.announce(AWordFromOurSponsor).class.should == AWordFromOurSponsor
+    @announcer.announce(AWordFromOurSponsor.new).class.should == AWordFromOurSponsor
   end
 
   it "should execute block specified by subscription" do
     
     #@announcer.spy!
 
-    # Make sure the subscription block fires when an AnnouncementA is 
-    # announced, setting what_was_announced to the announcement)
+    # After subscribing to KnockOut, make sure it fires whenever
+    # KnockOut or it's subclass TKO are announced.
+    # Also make sure it fires when instances of those classes are announced
     what_was_announced = nil
-    @announcer.when_announcing(AnnouncementB) { |ann| what_was_announced = ann }
-    @announcer.announce AnnouncementB
+    @announcer.when_announcing(AWordFromOurSponsor, KnockOut) { |ann| what_was_announced = ann }
+
+    what_was_announced = nil
+    @announcer.announce KnockOut
     what_was_announced.should_not be_nil
-    what_was_announced.class.should be_eql AnnouncementB
+    what_was_announced.class.should be_eql KnockOut
    
     what_was_announced = nil
-    @announcer.announce AnnouncementC
+    @announcer.announce TKO
     what_was_announced.should_not be_nil
-    what_was_announced.class.should be_eql AnnouncementC
+    what_was_announced.class.should be_eql TKO
+
+    #
+    # Do the same thing as above, but announce instances (test above used the class as the announcement)
+    # make sure if an announcement instance is announced, that the exact instance is what is announced
+    #
+    what_was_announced = nil
+    announcement = AWordFromOurSponsor.new
+    announcement.word = 'the'
+    @announcer.announce announcement
+    what_was_announced.should_not be_nil
+    what_was_announced.class.should be_eql AWordFromOurSponsor
+    what_was_announced.word.should be_eql('the')
+   
+    what_was_announced = nil
+    @announcer.announce TKO.new
+    what_was_announced.should_not be_nil
+    what_was_announced.class.should be_eql TKO
   end
 
-  it "should take actions only on announcements of events for which there is a subscribtion" do
-    # Make sure the subscription block fires when an AnnouncementA is 
+  it "should take actions only on announcements of events for which there is a subscription" do
+    # Make sure the subscription block fires when an AWordFromOurSponsor is 
     # announced, setting what_was_announced to the announcement)
     what_was_announced = nil
-    @announcer.when_announcing(AnnouncementB) { |ann| what_was_announced = ann }
+    @announcer.when_announcing(KnockOut) { |ann| what_was_announced = ann }
 
-    @announcer.announce AnnouncementA
+    @announcer.announce AWordFromOurSponsor
     what_was_announced.should be_nil
-    @announcer.announce AnnouncementC
+
+    @announcer.announce AWordFromOurSponsor.new # also test announcement instances
+    what_was_announced.should be_nil
+
+    @announcer.announce TKO # subclass of Knockout, should be announced
     what_was_announced.should_not be_nil
   end
 
   it "should be able to subscribe to set of announcements types" do
     what_was_announced = nil
-    @announcer.when_announcing(AnnouncementA, AnnouncementB) { |ann| what_was_announced = ann }
+    @announcer.when_announcing(AWordFromOurSponsor, KnockOut) { |ann| what_was_announced = ann }
 
     what_was_announced = nil
-    @announcer.announce AnnouncementA
+    @announcer.announce AWordFromOurSponsor
     what_was_announced.should_not be_nil
 
     what_was_announced = nil
-    @announcer.announce AnnouncementB
+    @announcer.announce KnockOut
     what_was_announced.should_not be_nil
   end
 
   it "should not take actions after unsubscribing" do
     what_was_announced = nil
-    @announcer.when_announcing(AnnouncementA, AnnouncementB) { |ann| what_was_announced = ann }
-    @announcer.announce AnnouncementA
+    @announcer.when_announcing(AWordFromOurSponsor, KnockOut) { |ann| what_was_announced = ann }
+    @announcer.announce AWordFromOurSponsor
     what_was_announced.should_not be_nil
 
-    @announcer.unsubscribe(AnnouncementA)
+    @announcer.unsubscribe(AWordFromOurSponsor)
     what_was_announced = nil
-    @announcer.announce AnnouncementA
+    @announcer.announce AWordFromOurSponsor
     what_was_announced.should be_nil
-    @announcer.announce AnnouncementB
+    @announcer.announce KnockOut
     what_was_announced.should_not be_nil
   end
 
@@ -87,15 +113,20 @@ describe Cosell do
     what_was_announced = nil
     count = 0
     sleep_time = 0.1
-    how_many_each_cycle = 7
-    @announcer.queue_announcements!(:sleep_time => sleep_time, :announcements_per_cycle => how_many_each_cycle)
-    @announcer.when_announcing(AnnouncementA) { |ann| count += 1 }
+    how_many_each_cycle = 77
+    @announcer.queue_announcements!(:sleep_time => sleep_time, 
+                                    :logger => Logger.new(STDOUT),
+                                    :announcements_per_cycle => how_many_each_cycle)
+    @announcer.when_announcing(AWordFromOurSponsor) { |ann| count += 1 }
+
+    little_bench("time to queue 10_000 announcements"){10_000.times {@announcer.announce AWordFromOurSponsor}}
 
     # @announcer.spy! #dbg
 
-    little_bench("time to queue 100_000 announcements"){100_000.times {@announcer.announce AnnouncementA}}
-
-
+    # Allow announcer thread to do a few batches of announcements, checking the 
+    # count after each batch. Since we may get to this part of the thread after
+    # the announcer has already made a few announcements, use the count at
+    # this moment as the starting_count
     start_count = count
     #puts "-------start count: #{count}" # dbg
 
@@ -110,6 +141,13 @@ describe Cosell do
     sleep sleep_time
     #puts "-------count: #{count}" # dbg
     count.should be_eql(start_count + 3*how_many_each_cycle)
+
+    # See if killing the queue stops announcments that where queued
+    @announcer.kill_queue!
+    count_after_queue_stopped = count
+    #puts "-------count after stopping: #{count}" # dbg
+    sleep sleep_time * 2
+    count.should be_eql(count_after_queue_stopped)
 
   end
 
