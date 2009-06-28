@@ -28,6 +28,8 @@ describe Cosell do
 
   it "should execute block specified by subscription" do
     
+    #@announcer.spy!
+
     # Make sure the subscription block fires when an AnnouncementA is 
     # announced, setting what_was_announced to the announcement)
     what_was_announced = nil
@@ -81,6 +83,44 @@ describe Cosell do
     what_was_announced.should_not be_nil
   end
 
+  it "should be able to queue announcements" do
+    what_was_announced = nil
+    count = 0
+    sleep_time = 0.1
+    how_many_each_cycle = 7
+    @announcer.queue_announcements!(:sleep_time => sleep_time, :announcements_per_cycle => how_many_each_cycle)
+    @announcer.when_announcing(AnnouncementA) { |ann| count += 1 }
+
+    # @announcer.spy! #dbg
+
+    little_bench("time to queue 100_000 announcements"){100_000.times {@announcer.announce AnnouncementA}}
+
+
+    start_count = count
+    #puts "-------start count: #{count}" # dbg
+
+    sleep sleep_time + 0.01
+    #puts "-------count: #{count}" # dbg
+    count.should be_eql(start_count + 1*how_many_each_cycle)
+
+    sleep sleep_time
+    #puts "-------count: #{count}" # dbg
+    count.should be_eql(start_count + 2*how_many_each_cycle)
+
+    sleep sleep_time
+    #puts "-------count: #{count}" # dbg
+    count.should be_eql(start_count + 3*how_many_each_cycle)
+
+  end
+
+  protected
+
+    def little_bench(msg, &block)
+      start = Time.now
+      result = block.call
+      puts "#{msg}: #{Time.now - start} sec"
+      return result
+    end
 end
 
 # EOF

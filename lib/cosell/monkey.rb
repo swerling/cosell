@@ -10,6 +10,10 @@ class Object
     new_inst
   end
 
+  def as_announcement_trace
+    self.to_s
+  end
+
 end
 
 

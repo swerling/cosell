@@ -1,3 +1,5 @@
+require 'logger'
+
 module Cosell
   module Announcer
 
@@ -5,9 +7,34 @@ module Cosell
       @subscriptions ||= {}
     end
 
-    def queue_announcements!
+    def queue_announcements!(opts = {})
       @announcements_queued = true
-      @announcements_queue ||= Cosell::ConcurrentAnnouncementQueue.new(:announcer => self)
+      @announcements_queue ||= Queue.new
+
+      how_many_per_cycle = opts[:announcements_per_cycle] || 5
+      cycle_duration = opts[:sleep_time] || 0.01
+      count = 0
+
+      @announcements_thread ||= Thread.new do 
+        begin
+          loop do
+            self.announce_now! @announcements_queue.pop
+            count += 1
+            if (count%how_many_per_cycle).eql?(0)
+              count = 0
+              sleep cycle_duration
+            end
+          end
+        rescue Exception => x
+          msg = "Exception: #{x}, trace: \n\t#{x.backtrace.join("\n\t")}"
+          if @logger.nil?
+            puts msg
+          else
+            logger.error msg
+          end
+        end
+      end
+
     end
 
     def queue_announcements?
@@ -65,11 +92,27 @@ module Cosell
     end
     alias_method :when_announcing, :subscribe
 
+    # Stop announcing for a given class
     def unsubscribe *announce_classes
       Array(announce_classes).each do |announce_class|
         self.subscriptions.delete announce_class
       end
     end
+
+    # Log a message every time this announcer makes an announcement
+    # Options:
+    #    :logger => The log to log to. Default is a logger on STDOUT
+    #    :on => Which class of announcements to spy on. Default is Object (ie. all announcements)
+    #    :level => The log level to log with. Default is :info
+    #    :preface => A message to prepend to all log messages. Default is "Announcement Spy: "
+    def spy!(opts = {})
+      logger = opts[:logger] || Logger.new(STDOUT)
+      on = opts[:on] || Object
+      level = opts[:level] || :info
+      preface = opts[:preface_with] || "Announcement Spy: "
+      self.subscribe(on){|ann| logger.send(level, "#{preface} #{ann.as_announcement_trace}")}
+    end
+
   end
 end
 
