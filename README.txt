@@ -13,16 +13,17 @@ Bykov (refs below).
 
 Pedigree
 
-  This implementation is a based on Lukas Renggli's tweak of Colin Putney's
+  This implementation is loosely based on Lukas Renggli's tweak of Colin Putney's
   Squeak implementation of Vassili Bykov's Announcements framework for
   VisualWorks Smalltalk.  (Specifically Announcements-lr.13.mcz was used as
   a reference.)
   
   Liberties where taken during the port. In particular, the Announcer class
   in the Smalltalk version is implemented here a ruby module which can be
-  mixed into any ruby object. 
+  mixed into any ruby object. Also, in this implementation any object can serve
+  as an announcement, so no Announcement class is implemented. 
 
-  The concurrent announcements queue is original to this version.
+  The announcements queue is original to this version (as far as I know).
 
 
 The Name 'Cosell'
@@ -45,11 +46,105 @@ See:
 
 == FEATURES/PROBLEMS:
 
-* None known
+* None known. Not tested on ruby 1.9 yet.
 
 == SYNOPSIS:
 
-  FIXME (code sample of usage)
+      #
+      #  Will produce the following output:
+      #
+      #       And now a word from our sponsor: 'the'
+      #       End of round 1
+      #       End of round 2
+      #       End of round 3
+      #       End of round 4
+      #       End of round 5
+      #       End of round 6
+      #       End of round 7
+      #       End of round 8
+      #       End of round 9
+      #       End of round 10
+      #       End of round 11
+      #       End of round 12
+      #       End of round 13
+      #       End of round 14
+      #       TKO!
+              
+      require 'rubygems'
+      require 'cosell'
+
+      # An announcer
+      class Howard
+        include Cosell
+      end
+
+      # a receiver of the announcements
+      class Television
+        def say_it!(ann)
+          puts ann.to_s
+        end
+      end
+
+      # Some announcements
+      class Announcement
+        def to_s
+          self.class.to_s
+        end
+      end
+
+      class WordFromOurSponsor < Announcement
+        attr_accessor :word
+        def to_s
+          "And now a word from our sponsor: '#{word}'"
+        end
+      end
+
+      class EndOfRound < Announcement
+        def to_s
+          "End of round #{$round}"
+        end
+      end
+
+      class KnockOut < Announcement
+        def to_s
+          self.class.to_s + '!'
+        end
+      end
+
+      class TKO < KnockOut; end
+
+      @howard = Howard.new
+      @tv = Television.new
+      $round = 1
+      @howard.when_announcing(WordFromOurSponsor, KnockOut) do |ann| 
+        @tv.say_it!(ann) 
+      end
+
+      announcement = WordFromOurSponsor.new
+      announcement.word = 'the'
+      @howard.announce(announcement) 
+        # => And know a word from our sponsors: 'the' 
+
+      @howard.announce(EndOfRound) 
+        # => nothing, you haven't subscribed yet to EndOfRound
+
+      @howard.when_announcing(EndOfRound) do |ann| 
+        @tv.say_it!(ann) 
+        $round += 1 if ann.is_a?(EndOfRound)
+      end
+
+      @howard.announce(EndOfRound) 
+        # => EndOfRound
+
+      @howard.queue_announcements!(:sleep_time => 0.05, 
+                                  :announcements_per_cycle => 3)
+      13.times {@howard.announce(EndOfRound)}
+      sleep 0.05  # announcer thread will announce end of rounds 1-3
+      sleep 0.05  # announcer thread will announce end of rounds 4-6
+      sleep 0.05  # announcer thread will announce end of rounds 7-9
+      sleep 0.05  # announcer thread will announce end of rounds 10-12
+      sleep 0.05  # announcer thread will announce end of round 13
+      @howard.announce(TKO) 
 
 == REQUIREMENTS:
 
@@ -57,13 +152,14 @@ See:
 
 == INSTALL:
 
-* gem install cosell TODO(ref to github)
+* TODO: sudo gem install swerling-cosell
+ 
 
 == LICENSE:
 
 (The MIT License)
 
-Copyright (c) 2008 FIXME (different license?)
+Copyright (c) 2008 
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the

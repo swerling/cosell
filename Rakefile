@@ -19,9 +19,9 @@ require 'cosell'
 task :default => 'spec:run'
 
 PROJ.name = 'cosell'
-PROJ.authors = 'FIXME (who is writing this software)'
-PROJ.email = 'FIXME (your e-mail)'
-PROJ.url = 'FIXME (project homepage)'
+PROJ.authors = 'Steven Swerling'
+PROJ.email = 'sswerling@yahoo.com'
+PROJ.url = 'http://github.com/swerling/TODO'
 PROJ.version = Cosell::VERSION
 PROJ.rubyforge.name = 'cosell'
 

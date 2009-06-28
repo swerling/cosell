@@ -48,7 +48,7 @@ module Cosell
               self.announce_now! @announcements_queue.pop
               count += 1
               if (count%how_many_per_cycle).eql?(0)
-                logger.debug "Announcement queue finished batch of #{how_many_per_cycle}, sleeping for #{cycle_duration} sec"
+                logger.debug "Announcement queue finished batch of #{how_many_per_cycle}, sleeping for #{cycle_duration} sec" if logger
                 count = 0
                 sleep cycle_duration
               end
