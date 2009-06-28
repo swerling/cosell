@@ -24,8 +24,8 @@ describe Cosell do
   end
 
   it "should instantiate announcement instance from class if needed" do
-    @announcer.announce(AWordFromOurSponsor).class.should == AWordFromOurSponsor
-    @announcer.announce(AWordFromOurSponsor.new).class.should == AWordFromOurSponsor
+    @announcer.announce(AWordFromOurSponsor).class.should be_eql(AWordFromOurSponsor)
+    @announcer.announce(AWordFromOurSponsor.new).class.should be_eql(AWordFromOurSponsor)
   end
 
   it "should execute block specified by subscription" do

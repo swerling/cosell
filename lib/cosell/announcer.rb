@@ -2,6 +2,14 @@ require 'logger'
 
 module Cosell
 
+    def initialize *args
+      @__queue_announcements = false
+      @__announcements_queue = nil
+      @__kill_announcement_queue = false
+      @__announcements_thread = nil
+      return super(*args)
+    end
+
     #
     #
     #           ANNOUNCEMENTS QUEUE
@@ -22,30 +30,31 @@ module Cosell
     
     def queue_announcements!(opts = {})
 
-      if @announcements_thread
+      # kill off the last queue first
+      if @__announcements_thread
         kill_queue!
         sleep 0.01
         queue_announcements! opts
       end
 
-      @announcements_queued = true
-      @announcements_queue ||= Queue.new
+      @__queue_announcements = true
+      @__announcements_queue ||= Queue.new
 
       how_many_per_cycle = opts[:announcements_per_cycle] || 5
       cycle_duration = opts[:sleep_time] || 0.01
       logger = opts[:logger]
       count = 0
 
-      @announcements_thread ||= Thread.new do 
+      @__announcements_thread ||= Thread.new do 
         begin
           loop do
-            if @_kill_announcement_queue
-              @_kill_announcement_queue = nil
-              @announcements_thread = nil
-              logger.info("Announcement queue killed with #{@announcements_queue.size} announcements still queued") if logger
+            if @__kill_announcement_queue
+              @__kill_announcement_queue = nil
+              @__announcements_thread = nil
+              logger.info("Announcement queue killed with #{@__announcements_queue.size} announcements still queued") if logger
               break
             else
-              self.announce_now! @announcements_queue.pop
+              self.announce_now! @__announcements_queue.pop
               count += 1
               if (count%how_many_per_cycle).eql?(0)
                 logger.debug "Announcement queue finished batch of #{how_many_per_cycle}, sleeping for #{cycle_duration} sec" if logger
@@ -62,11 +71,11 @@ module Cosell
     end
 
     def kill_queue!
-      @_kill_announcement_queue = true
+      @__kill_announcement_queue = true
     end
 
     def queue_announcements?
-      @announcements_queued.eql?(true)
+      return @__queue_announcements.eql?(true)
     end
 
     #
@@ -86,7 +95,7 @@ module Cosell
       Array(announce_classes).each do |announce_class|
         raise "Can only subscribe to classes, not an class: #{announce_class}" unless announce_class.is_a?(Class)
         self.subscriptions[announce_class] ||= []
-        self.subscriptions[announce_class] << (lambda &block)
+        self.subscriptions[announce_class] << lambda(&block)
       end
     end
     alias_method :when_announcing, :subscribe
@@ -102,7 +111,7 @@ module Cosell
     # Otherwise, calls announce_now!
     def announce announcement
       if self.queue_announcements?
-        @announcements_queue << announcement
+        @__announcements_queue << announcement
       else
         self.announce_now! announcement
       end

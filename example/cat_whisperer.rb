@@ -65,6 +65,10 @@ cat_whisperer.when_announcing(DogEnteringHome) do |event|
   cat.deal_with_dog(event.who_is_entering)
   rally_big_cat.deal_with_dog(event.who_is_entering)
 end
+cat_whisperer.when_announcing(DogEnteringHome, :send => |event|
+  cat.deal_with_dog(event.who_is_entering)
+  rally_big_cat.deal_with_dog(event.who_is_entering)
+end
 
 cat_whisperer.when_announcing(OwnerEnteringHome) do |event|
   cat.deal_with_person(dog_entering_event.who_is_entering)
