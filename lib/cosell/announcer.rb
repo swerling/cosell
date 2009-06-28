@@ -56,7 +56,7 @@ module Cosell
     # Pass in an anouncement class (or array of announcement classes), along with a block defining the 
     # action to be taken when an announcment of one of the specified classes is announced by this announcer.
     # (see Cossell::Announcer for full explanation)
-    def subscribe announce_classes, &block
+    def subscribe *announce_classes, &block
       Array(announce_classes).each do |announce_class|
         raise "Can only subscribe to classes, not an class: #{announce_class}" unless announce_class.is_a?(Class)
         self.subscriptions[announce_class] ||= []
@@ -65,6 +65,11 @@ module Cosell
     end
     alias_method :when_announcing, :subscribe
 
+    def unsubscribe *announce_classes
+      Array(announce_classes).each do |announce_class|
+        self.subscriptions.delete announce_class
+      end
+    end
   end
 end
 

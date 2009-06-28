@@ -50,17 +50,35 @@ describe Cosell do
 
     @announcer.announce AnnouncementA
     what_was_announced.should be_nil
-    # Implemenent
-    # TODO:
-    #   testSubscribeSet
-    #   testSubscribeSubclass
+    @announcer.announce AnnouncementC
+    what_was_announced.should_not be_nil
+  end
+
+  it "should be able to subscribe to set of announcements types" do
+    what_was_announced = nil
+    @announcer.when_announcing(AnnouncementA, AnnouncementB) { |ann| what_was_announced = ann }
+
+    what_was_announced = nil
+    @announcer.announce AnnouncementA
+    what_was_announced.should_not be_nil
+
+    what_was_announced = nil
+    @announcer.announce AnnouncementB
+    what_was_announced.should_not be_nil
   end
 
   it "should not take actions after unsubscribing" do
-    # Implemenent
-    #   testUnsubcribeBlock
-    #   testUnsubcribeSent
-    #   testUnsubcribeSet
+    what_was_announced = nil
+    @announcer.when_announcing(AnnouncementA, AnnouncementB) { |ann| what_was_announced = ann }
+    @announcer.announce AnnouncementA
+    what_was_announced.should_not be_nil
+
+    @announcer.unsubscribe(AnnouncementA)
+    what_was_announced = nil
+    @announcer.announce AnnouncementA
+    what_was_announced.should be_nil
+    @announcer.announce AnnouncementB
+    what_was_announced.should_not be_nil
   end
 
 end
