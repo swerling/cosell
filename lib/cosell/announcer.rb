@@ -7,6 +7,7 @@ module Cosell
       @__announcements_queue = nil
       @__kill_announcement_queue = false
       @__announcements_thread = nil
+      @__subscriptions = {}
       return super(*args)
     end
 
@@ -84,8 +85,9 @@ module Cosell
     #
     #
 
+    # keep this public?
     def subscriptions
-      @subscriptions ||= {}
+      @__subscriptions
     end
 
     # Pass in an anouncement class (or array of announcement classes), along with a block defining the 
