@@ -3,12 +3,16 @@ require 'logger'
 module Cosell
 
     def initialize *args
+      initialize_cosell!
+      return super(*args)
+    end
+
+    def initialize_cosell!
       @__queue_announcements = false
       @__announcements_queue = nil
       @__kill_announcement_queue = false
       @__announcements_thread = nil
       @__subscriptions = {}
-      return super(*args)
     end
 
     #
@@ -87,7 +91,13 @@ module Cosell
 
     # keep this public?
     def subscriptions
+      # if user never called 'initialize' on the object this was mixed into, just initialize it now
+      self.initialize_cosell! if @__subscriptions.nil?
       @__subscriptions
+    end
+
+    def subscriptions= x
+      @__subscriptions = x
     end
 
     # Pass in an anouncement class (or array of announcement classes), along with a block defining the 
@@ -137,9 +147,9 @@ module Cosell
       announcement = an_announcement_or_announcement_factory.as_announcement
 
       unless self.subscriptions.empty?
-        self.subscriptions.each do |subscription_type, subscriptions |
+        self.subscriptions.each do |subscription_type, subscriptions_for_type |
           if announcement.is_a?(subscription_type)
-            subscriptions.each{|subscription| subscription.call(announcement) }
+            subscriptions_for_type.each{|subscription| subscription.call(announcement) }
           end
         end
       end
@@ -168,4 +178,5 @@ module Cosell
     end
 
 end
+
 

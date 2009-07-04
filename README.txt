@@ -6,12 +6,12 @@ cosell
 
 Cosell is a minimal implementation of the 'Announcements' observer
 framework, originally introduced in VisualWorks Smalltalk 7.4 as a
-replacement for the 'triggerEvent' style of event notification.  Instead of
+replacement for 'triggerEvent' style of event notification.  Instead of
 triggering events identified by symbols, the events are first class
-objects.  For rational, please see the original blog posting by Vassili
+objects.  For rationale, please see the original blog posting by Vassili
 Bykov (refs below).
 
-Pedigree
+Lineage
 
   This implementation is loosely based on Lukas Renggli's tweak of Colin Putney's
   Squeak implementation of Vassili Bykov's Announcements framework for
@@ -23,8 +23,6 @@ Pedigree
   mixed into any object. Also, in this implementation any object (or class)
   can serve as an announcement, so no Announcement class is implemented. 
 
-  The announcements queue is original to this version (as far as I know).
-
 
 The Name 'Cosell'
 
@@ -32,9 +30,9 @@ The Name 'Cosell'
 
     a) Howard Cosell is famous for his event notification prowess 
     b) Googling for 'Ruby Announcements', 'Ruby Event Announcements', etc.,
-      produced scads of results about ruby meetups, conferences, and the
-      like. So I went with something a bit cryptic but hopefully a little
-      more searchable. 
+       produced scads of results about ruby meetups, conferences, and the
+       like. So I went with something a bit cryptic but hopefully a little
+       more searchable. 
 
 See:
 
