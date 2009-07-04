@@ -28,51 +28,47 @@ module Cosell
     def queue_announcements!(opts = {})
 
       # kill off the last queue first
-      if @__announcements_thread
+      if self.announcements_thread
         kill_queue!
         sleep 0.01
         queue_announcements! opts
       end
 
-      @__queue_announcements = true
+      self.should_queue_announcements = true
       @__announcements_queue ||= Queue.new
 
       how_many_per_cycle = opts[:announcements_per_cycle] || 5
       cycle_duration = opts[:sleep_time] || 0.01
-      logger = opts[:logger]
+      self.queue_logger = opts[:logger]
       count = 0
 
-      @__announcements_thread ||= Thread.new do 
+      self.announcements_thread = Thread.new do 
         begin
           loop do
-            if @__kill_announcement_queue
-              @__kill_announcement_queue = nil
-              @__announcements_thread = nil
-              logger.info("Announcement queue killed with #{self.announcements_queue.size} announcements still queued") if logger
+            if queue_killed?
+              self.kill_announcement_queue = false
+              self.announcements_thread = nil
+              log "Announcement queue killed with #{self.announcements_queue.size} announcements still queued", :info
               break
             else
               self.announce_now! self.announcements_queue.pop
               count += 1
               if (count%how_many_per_cycle).eql?(0)
-                logger.debug "Announcement queue finished batch of #{how_many_per_cycle}, sleeping for #{cycle_duration} sec" if logger
+                log "Announcement queue finished batch of #{how_many_per_cycle}, sleeping for #{cycle_duration} sec", :debug
                 count = 0
                 sleep cycle_duration
               end
             end
           end
         rescue Exception => x
-          logger.error("Exception: #{x}, trace: \n\t#{x.backtrace.join("\n\t")}") if logger
+          log "Exception: #{x}, trace: \n\t#{x.backtrace.join("\n\t")}", :error
         end
       end
 
     end
 
-    def kill_queue!
-      @__kill_announcement_queue = true
-    end
-
-    def queue_announcements?
-      return @__queue_announcements.eql?(true)
+    def log(msg, level = :info)
+      self.queue_logger.send(level, msg) if self.queue_logger
     end
 
     #
@@ -180,16 +176,31 @@ module Cosell
       @__kill_announcement_queue = false
       @__announcements_thread = nil
       @__subscriptions = {}
+      @__queue_logger = {}
+    end
+
+    def kill_queue!
+      @__kill_announcement_queue = true
+    end
+
+    def queue_killed?
+      @__kill_announcement_queue.eql?(true)
+    end
+
+    def queue_announcements?
+      return @__queue_announcements.eql?(true)
     end
 
     protected
 
+      def queue_logger; @__queue_logger; end
+      def queue_logger= x; @__queue_logger = x; end
       def announcements_queue; @__announcements_queue; end
       def announcements_queue= x; @__announcements_queue = x; end
       def announcements_thread; @__announcements_thread; end
       def announcements_thread= x; @__announcements_thread = x; end
-      def kill_announcements_queue?; @__kill_announcement_queue; end
-      def kill_announcements_queue!; @__kill_announcement_queue = true; end
+      def kill_announcement_queue= x; @__kill_announcement_queue = x; end
+      def should_queue_announcements= x; @__queue_announcements = x; end
       def subscriptions= x; @__subscriptions = x; end
 
     public
