@@ -21,6 +21,7 @@ describe Cosell do
 
   before(:each) do
     @announcer = AnyOldClass.new
+    @announcer.initialize_cosell!
   end
 
   it "should instantiate announcement instance from class if needed" do
@@ -150,6 +151,20 @@ describe Cosell do
     count.should be_eql(count_after_queue_stopped)
 
   end
+
+#  it "should suppress announcements during suppress_announcements block" do
+#    # TODO: support for this idiom:
+#    notifier.suppress_announcements_during {
+#    }
+#       and
+#    notifier.suppress_announcements(EventType,
+#                                    :during => lambda { "some operation" },
+#                                    :send_unique_events_when_done => true)
+#       and
+#    notifier.suppress_announcements(EventType,
+#                                    :during => lambda { "some operation" },
+#                                    :send_all_events_when_done => true)
+#  end
 
   protected
 

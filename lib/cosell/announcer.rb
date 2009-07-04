@@ -4,15 +4,7 @@ module Cosell
 
     def initialize *args
       initialize_cosell!
-      return super(*args)
-    end
-
-    def initialize_cosell!
-      @__queue_announcements = false
-      @__announcements_queue = nil
-      @__kill_announcement_queue = false
-      @__announcements_thread = nil
-      @__subscriptions = {}
+      super
     end
 
     #
@@ -56,10 +48,10 @@ module Cosell
             if @__kill_announcement_queue
               @__kill_announcement_queue = nil
               @__announcements_thread = nil
-              logger.info("Announcement queue killed with #{@__announcements_queue.size} announcements still queued") if logger
+              logger.info("Announcement queue killed with #{self.announcements_queue.size} announcements still queued") if logger
               break
             else
-              self.announce_now! @__announcements_queue.pop
+              self.announce_now! self.announcements_queue.pop
               count += 1
               if (count%how_many_per_cycle).eql?(0)
                 logger.debug "Announcement queue finished batch of #{how_many_per_cycle}, sleeping for #{cycle_duration} sec" if logger
@@ -89,21 +81,11 @@ module Cosell
     #
     #
 
-    # keep this public?
-    def subscriptions
-      # if user never called 'initialize' on the object this was mixed into, just initialize it now
-      self.initialize_cosell! if @__subscriptions.nil?
-      @__subscriptions
-    end
-
-    def subscriptions= x
-      @__subscriptions = x
-    end
-
     # Pass in an anouncement class (or array of announcement classes), along with a block defining the 
     # action to be taken when an announcment of one of the specified classes is announced by this announcer.
     # (see Cossell::Announcer for full explanation)
     def subscribe *announce_classes, &block
+      initialize_cosell_if_needed
       Array(announce_classes).each do |announce_class|
         raise "Can only subscribe to classes, not an class: #{announce_class}" unless announce_class.is_a?(Class)
         self.subscriptions[announce_class] ||= []
@@ -123,7 +105,7 @@ module Cosell
     # Otherwise, calls announce_now!
     def announce announcement
       if self.queue_announcements?
-        @__announcements_queue << announcement
+        self.announcements_queue << announcement
       else
         self.announce_now! announcement
       end
@@ -176,6 +158,42 @@ module Cosell
       preface = opts[:preface_with] || "Announcement Spy: "
       self.subscribe(on){|ann| logger.send(level, "#{preface} #{ann.as_announcement_trace}")}
     end
+
+    # keep this public?
+    def subscriptions
+      # if user did not pass initialize up to the super, then lazy init it now
+      self.initialize_cosell_if_needed 
+      return @__subscriptions
+    end
+
+    def initialize_cosell_if_needed
+      self.initialize_cosell! if @__subscriptions.nil? # check-mate. there will be a warning here.
+    end
+
+    # Optional -- calling this will get rid of any subsequent warnings about uninitialized ivs
+    def initialize_cosell!
+      # using pseudo-scoped var names. 
+      # But users should access these via the accessor methods.
+      # unfortunately cant lazily init these w/out ruby warnings going berzerk in verbose mode.
+      @__queue_announcements = false
+      @__announcements_queue = nil
+      @__kill_announcement_queue = false
+      @__announcements_thread = nil
+      @__subscriptions = {}
+    end
+
+    protected
+
+      def announcements_queue; @__announcements_queue; end
+      def announcements_queue= x; @__announcements_queue = x; end
+      def announcements_thread; @__announcements_thread; end
+      def announcements_thread= x; @__announcements_thread = x; end
+      def kill_announcements_queue?; @__kill_announcement_queue; end
+      def kill_announcements_queue!; @__kill_announcement_queue = true; end
+      def subscriptions= x; @__subscriptions = x; end
+
+    public
+
 
 end
 
