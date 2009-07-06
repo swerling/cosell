@@ -19,13 +19,15 @@ module Cosell
     #    :sleep_time => how long to sleep (in seconds) after making a batch of announchements 
     #                   default: 0.01
     #    :announcements_per_cycle => how many announcements to make before sleeping for sleep_time
-    #                   default: 5
-    #    :logger => a logger. Where to log exceptions and warnings
+    #                   default: 25
+    #    :logger => a logger. Where to log exceptions and warnings.
     #
     # Note: at the moment, this method may only be called once, and cannot be undone. There is
     # no way to interrupt the thread.
     
     def queue_announcements!(opts = {})
+
+      self.initialize_cosell_if_needed
 
       # kill off the last queue first
       if self.announcements_thread
@@ -37,7 +39,7 @@ module Cosell
       self.should_queue_announcements = true
       @__announcements_queue ||= Queue.new
 
-      how_many_per_cycle = opts[:announcements_per_cycle] || 5
+      how_many_per_cycle = opts[:announcements_per_cycle] || 25
       cycle_duration = opts[:sleep_time] || 0.01
       self.queue_logger = opts[:logger]
       count = 0
@@ -81,7 +83,9 @@ module Cosell
     # action to be taken when an announcment of one of the specified classes is announced by this announcer.
     # (see Cossell::Announcer for full explanation)
     def subscribe *announce_classes, &block
-      initialize_cosell_if_needed
+
+      self.initialize_cosell_if_needed
+
       Array(announce_classes).each do |announce_class|
         raise "Can only subscribe to classes, not an class: #{announce_class}" unless announce_class.is_a?(Class)
         self.subscriptions[announce_class] ||= []
@@ -143,40 +147,33 @@ module Cosell
 
     # Log a message every time this announcer makes an announcement
     # Options:
-    #    :logger => The log to log to. Default is a logger on STDOUT
     #    :on => Which class of announcements to spy on. Default is Object (ie. all announcements)
+    #    :logger => The log to log to. Default is a logger on STDOUT
     #    :level => The log level to log with. Default is :info
     #    :preface => A message to prepend to all log messages. Default is "Announcement Spy: "
     def spy!(opts = {})
-      logger = opts[:logger] || Logger.new(STDOUT)
       on = opts[:on] || Object
+      logger = opts[:logger] || Logger.new(STDOUT)
       level = opts[:level] || :info
       preface = opts[:preface_with] || "Announcement Spy: "
       self.subscribe(on){|ann| logger.send(level, "#{preface} #{ann.as_announcement_trace}")}
     end
 
-    # keep this public?
-    def subscriptions
-      # if user did not pass initialize up to the super, then lazy init it now
-      self.initialize_cosell_if_needed 
-      return @__subscriptions
-    end
-
     def initialize_cosell_if_needed
-      self.initialize_cosell! if @__subscriptions.nil? # check-mate. there will be a warning here.
+      self.initialize_cosell! if @__subscriptions.nil? 
     end
 
     # Optional -- calling this will get rid of any subsequent warnings about uninitialized ivs
     def initialize_cosell!
-      # using pseudo-scoped var names. 
-      # But users should access these via the accessor methods.
-      # unfortunately cant lazily init these w/out ruby warnings going berzerk in verbose mode.
-      @__queue_announcements = false
-      @__announcements_queue = nil
-      @__kill_announcement_queue = false
-      @__announcements_thread = nil
-      @__subscriptions = {}
-      @__queue_logger = {}
+      # Using pseudo-scoped var names. 
+      # Unfortunately cant lazily init these w/out ruby warnings going berzerk in verbose mode,
+      # So explicitly declaring them here.
+      @__queue_announcements ||= false
+      @__announcements_queue ||= nil
+      @__kill_announcement_queue ||= false
+      @__announcements_thread ||= nil
+      @__subscriptions ||= {}
+      @__queue_logger ||= {}
     end
 
     def kill_queue!
@@ -202,6 +199,7 @@ module Cosell
       def kill_announcement_queue= x; @__kill_announcement_queue = x; end
       def should_queue_announcements= x; @__queue_announcements = x; end
       def subscriptions= x; @__subscriptions = x; end
+      def subscriptions; @__subscriptions; end
 
     public
 

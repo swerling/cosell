@@ -21,7 +21,6 @@ describe Cosell do
 
   before(:each) do
     @announcer = AnyOldClass.new
-    @announcer.initialize_cosell!
   end
 
   it "should instantiate announcement instance from class if needed" do
@@ -35,7 +34,7 @@ describe Cosell do
 
     # After subscribing to KnockOut, make sure it fires whenever
     # KnockOut or it's subclass TKO are announced.
-    # Also make sure it fires when instances of those classes are announced
+    
     what_was_announced = nil
     @announcer.when_announcing(AWordFromOurSponsor, KnockOut) { |ann| what_was_announced = ann }
 
@@ -49,10 +48,10 @@ describe Cosell do
     what_was_announced.should_not be_nil
     what_was_announced.class.should be_eql TKO
 
-    #
+    
     # Do the same thing as above, but announce instances (test above used the class as the announcement)
     # make sure if an announcement instance is announced, that the exact instance is what is announced
-    #
+   
     what_was_announced = nil
     announcement = AWordFromOurSponsor.new
     announcement.word = 'the'
@@ -65,6 +64,7 @@ describe Cosell do
     @announcer.announce TKO.new
     what_was_announced.should_not be_nil
     what_was_announced.class.should be_eql TKO
+
   end
 
   it "should take actions only on announcements of events for which there is a subscription" do
