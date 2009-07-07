@@ -1,11 +1,10 @@
 
-module Cosell
+module Cosell 
 
   # :stopdoc:
-  VERSION = '1.0.0'
+  VERSION = '0.0.1'
   LIBPATH = ::File.expand_path(::File.dirname(__FILE__)) + ::File::SEPARATOR
   PATH = ::File.dirname(LIBPATH) + ::File::SEPARATOR
-  # :startdoc:
 
   # Returns the version string for the library.
   #
@@ -41,6 +40,7 @@ module Cosell
 
     Dir.glob(search_me).sort.each {|rb| require rb}
   end
+  # :startdoc:
 
 end  # module Cosell
 

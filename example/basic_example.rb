@@ -86,11 +86,11 @@ $howard.when_announcing(EndOfRound, &eor_subscription)
 $howard.queue_announcements!(:sleep_time => 0.05, :announcements_per_cycle => 5)
 14.times {$howard.announce(EndOfRound)} # announcements occur in bg thread
 
-sleep 0.05 # announcements for end of a few rounds appear
-sleep 0.05 # announcements for end of the next few rounds
-sleep 0.05 # announcements for end of the next few rounds
-sleep 0.05 # announcements for end of the next few rounds
+sleep 0.05 # announcements for the first 5 rounds appear
+sleep 0.05 # announcements for the next 5 rounds
+sleep 0.05 # announcements for end of the next 4 rounds (there is not 15th round
+sleep 0.05 # no announcements, all the announcements have been announced
 
 $howard.announce(TKO) 
     # => TKO!
-
+sleep 0.05 # the TKO is announced

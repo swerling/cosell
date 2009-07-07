@@ -69,10 +69,6 @@ module Cosell
 
     end
 
-    def log(msg, level = :info)
-      self.queue_logger.send(level, msg) if self.queue_logger
-    end
-
     #
     #
     #           SUBSCRIBE/MAKE ANNOUNCEMENTS 
@@ -101,8 +97,10 @@ module Cosell
       end
     end
 
-    # If queue_announcements? true, puts announcement in a Cosell:ConcurrentAnnouncementQueue.
+    # If queue_announcements? true, puts announcement in a Queue.
     # Otherwise, calls announce_now!
+    # Queued announcements are announced in a background thread in batches 
+    # (see the #initialize method doc for details).
     def announce announcement
       if self.queue_announcements?
         self.announcements_queue << announcement
@@ -145,7 +143,9 @@ module Cosell
     #
     #
 
+    # 
     # Log a message every time this announcer makes an announcement
+    #
     # Options:
     #    :on => Which class of announcements to spy on. Default is Object (ie. all announcements)
     #    :logger => The log to log to. Default is a logger on STDOUT
@@ -159,11 +159,15 @@ module Cosell
       self.subscribe(on){|ann| logger.send(level, "#{preface} #{ann.as_announcement_trace}")}
     end
 
+    # lazy initialization of cosell.
+    # Optional -- calling this will get rid of any subsequent warnings about uninitialized ivs
+    # In most cases not necessary, and should never have an effect except to get rid of some warnings.
     def initialize_cosell_if_needed
       self.initialize_cosell! if @__subscriptions.nil? 
     end
 
-    # Optional -- calling this will get rid of any subsequent warnings about uninitialized ivs
+    # Will blow away any queue, and reset all state.
+    # Should not be necessary to call this, but left public for testing.
     def initialize_cosell!
       # Using pseudo-scoped var names. 
       # Unfortunately cant lazily init these w/out ruby warnings going berzerk in verbose mode,
@@ -176,19 +180,30 @@ module Cosell
       @__queue_logger ||= {}
     end
 
+    # Kill the announcments queue.
+    # This is called automatically if you call queue_announcements!, before starting the next
+    # announcments thread, so it's optional. A way of stopping announcments.
     def kill_queue!
       @__kill_announcement_queue = true
     end
 
-    def queue_killed?
-      @__kill_announcement_queue.eql?(true)
-    end
-
+    # return whether annoucements are queued or sent out immediately when the #announce method is called.
     def queue_announcements?
       return @__queue_announcements.eql?(true)
     end
 
     protected
+      
+      #:stopdoc: 
+    
+      def log(msg, level = :info)
+        self.queue_logger.send(level, msg) if self.queue_logger
+      end
+
+      # return whether the queue was killed by kill_queue!
+      def queue_killed? 
+        @__kill_announcement_queue.eql?(true)
+      end
 
       def queue_logger; @__queue_logger; end
       def queue_logger= x; @__queue_logger = x; end
@@ -201,6 +216,7 @@ module Cosell
       def subscriptions= x; @__subscriptions = x; end
       def subscriptions; @__subscriptions; end
 
+      #:startdoc: 
     public
 
 

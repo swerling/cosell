@@ -27,4 +27,6 @@ PROJ.rubyforge.name = 'cosell'
 
 PROJ.spec.opts << '--color'
 
+PROJ.rdoc.opts = ["--inline-source"]
+
 # EOF
