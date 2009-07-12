@@ -1,24 +1,304 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Frameset//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-frameset.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+	"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 
-<!--
-
-     cosell's cosell-0.0.1 Documentation
-
-  -->
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-  <title> cosell's cosell-0.0.1 Documentation</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title> cosell's cosell-0.0.1 Documentation</title>
+
+	<link type="text/css" media="screen" href="rdoc.css" rel="stylesheet" />
+
+	<script src="js/jquery.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/thickbox-compressed.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/quicksearch.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/darkfish.js" type="text/javascript" charset="utf-8"></script>
+
 </head>
-<frameset rows="20%, 80%">
-    <frameset cols="25%,35%,45%">
-        <frame src="fr_file_index.html"   title="Files" name="Files" />
-        <frame src="fr_class_index.html"  name="Classes" />
-        <frame src="fr_method_index.html" name="Methods" />
-    </frameset>
-    <frame src="files/README_txt.html" name="docwin" />
-</frameset>
+<body class="indexpage">
+
+	
+	<h1> cosell's cosell-0.0.1 Documentation</h1>
+
+	
+	<div id="main">
+		<p>
+cosell
+</p>
+<pre>
+    by Steven Swerling
+    http://tab-a.slot-z.net
+</pre>
+<h2>DESCRIPTION:</h2>
+<p>
+<a href="Cosell.html">Cosell</a> is a minimal implementation of the
+&#8216;Announcements&#8217; observer framework, originally introduced in
+VisualWorks Smalltalk 7.4 as a replacement for &#8216;triggerEvent&#8217;
+style of event notification. Instead of triggering events identified by
+symbols, the events are first class objects. For rationale, please see the
+original blog posting by Vassili Bykov (refs below).
+</p>
+<p>
+<b>Lineage</b>
+</p>
+<p>
+This implementation is loosely based on Lukas Renggli&#8217;s tweak of
+Colin Putney&#8217;s Squeak implementation of Vassili Bykov&#8217;s
+Announcements framework for VisualWorks Smalltalk. (Specifically
+Announcements-lr.13.mcz was used as a reference.)
+</p>
+<p>
+Liberties where taken during the port. In particular, the Announcer class
+in the Smalltalk version is implemented here as a ruby module which can be
+mixed into any object. Also, in this implementation any object (or class)
+can serve as an announcement, so no Announcement class is implemented.
+</p>
+<p>
+<b>The Name &#8216;Cosell&#8217;</b>
+</p>
+<p>
+I chose the name &#8216;Cosell&#8217; because
+</p>
+<ol>
+<li type="a">Howard <a href="Cosell.html">Cosell</a> is an iconic event announcer
+
+</li>
+<li type="a">Googling for &#8216;Ruby Announcements&#8217;, &#8216;Ruby Event
+Announcements&#8217;, etc., produced scads of results about ruby meetups,
+conferences, and the like. So I went with something a bit cryptic but
+hopefully a little more searchable.
+
+</li>
+</ol>
+<p>
+<b>See</b>
+</p>
+<ul>
+<li><a
+href="http://www.cincomsmalltalk.com/userblogs/vbykov/blogView?entry=3310034894">Original
+blog posting describing Announcments by Vassili Bykov</a>
+
+</li>
+<li><a href="http://wiki.squeak.org/squeak/5734">More info on the Announcements
+Framework</a>
+
+</li>
+</ul>
+<h2>FEATURES/PROBLEMS:</h2>
+<ul>
+<li>None known. Should work in ruby 1.8 and 1.9.
+
+</li>
+</ul>
+<h2>SYNOPSIS:</h2>
+<pre>
+  (this example is in the [gem]/example/basic_example.rb file)
+
+  #
+  #  Will produce the following output:
+  #
+  #       And now a word from our sponsor: 'the'
+  #       End of round 1
+  #       End of round 2
+  #       End of round 3
+  #       End of round 4
+  #       End of round 5
+  #       End of round 6
+  #       End of round 7
+  #       End of round 8
+  #       End of round 9
+  #       End of round 10
+  #       End of round 11
+  #       End of round 12
+  #       End of round 13
+  #       End of round 14
+  #       TKO!
+
+  require 'rubygems'
+  require 'cosell'
+
+  # An announcer
+  class Howard
+    include Cosell
+  end
+
+  # a receiver of the announcements
+  class Television
+    def show(ann, opts={})
+      puts ann.to_s(opts)
+    end
+  end
+
+  # Some announcements
+  class Announcement
+    def to_s(opts={})
+      self.class.to_s + '!'
+    end
+  end
+  class WordFromOurSponsor &lt; Announcement
+    attr_accessor :word
+    def to_s(opts={})
+      &quot;And now a word from our sponsor: '#{word}'&quot;
+    end
+  end
+  class EndOfRound &lt; Announcement
+    def to_s(opts={})
+      &quot;End of round #{opts[:round]}&quot;
+    end
+  end
+  class KnockOut &lt; Announcement; end
+  class TKO &lt; KnockOut; end
+
+  # ------- Start announcing -------
+
+  # Create an announcer, and a subscriber
+  round = 1
+  howard = Howard.new
+  tv = Television.new
+  howard.when_announcing(WordFromOurSponsor, KnockOut) { |ann| tv.show(ann) }
+
+  # Make an announcement
+  announcement = WordFromOurSponsor.new
+  announcement.word = 'the'
+  howard.announce(announcement)
+    # =&gt; And know a word from our sponsors: 'the'
+
+  # Make another announcement
+  howard.announce(EndOfRound)
+    # =&gt; nothing, you haven't subscribed yet to EndOfRound. Tree fell, nobody heard. Didn't happen.
+
+  # Create a second subscription
+  eor_subscription = lambda do |ann|
+    tv.show(ann, :round =&gt; round)
+    round += 1
+  end
+  howard.when_announcing(EndOfRound, &amp;eor_subscription)
+
+  # Tell the announcer to use a background announcments queue
+  # Only allow the announcer to broadcast 5 announcments at a time
+  # before going to sleep for 0.05 seconds
+  howard.queue_announcements!(:sleep_time =&gt; 0.05, :announcements_per_cycle =&gt; 5)
+
+  # Start making announcments (they will be queueud in the background)
+  14.times {howard.announce(EndOfRound)}
+
+  sleep 0.05 # announcements for the first 5 rounds appear
+  sleep 0.05 # announcements for the next 5 rounds
+  sleep 0.05 # announcements for end of the next 4 rounds (there is not 15th round
+  sleep 0.05 # no announcements, all the announcements have been announced
+
+  # queue the final announcment
+  howard.announce(TKO)
+      # =&gt; TKO!
+
+  sleep 0.05 # the TKO is broadcast
+</pre>
+<h2>REQUIREMENTS:</h2>
+<ul>
+<li>ruby, rubygems
+
+</li>
+</ul>
+<h2>INSTALL:</h2>
+<ul>
+<li>TODO: sudo gem install swerling-cosell
+
+</li>
+</ul>
+<h2>LICENSE:</h2>
+<p>
+(The MIT License)
+</p>
+<p>
+Copyright &#169; 2008
+</p>
+<p>
+Permission is hereby granted, free of charge, to any person obtaining a
+copy of this software and associated documentation files (the
+&#8216;Software&#8217;), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge,
+publish, distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to the
+following conditions:
+</p>
+<p>
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+</p>
+<p>
+THE SOFTWARE IS PROVIDED &#8216;AS IS&#8217;, WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
+NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+</p>
+
+	</div>
+	
+
+	
+	
+	<h2>Files</h2>
+	<ul>
+		
+			<li class="file"><a href="History_txt.html">History.txt</a></li>
+		
+			<li class="file"><a href="README_txt.html">README.txt</a></li>
+		
+	</ul>
+	
+
+	<h2>Classes/Modules</h2>
+	<ul>
+		
+		<li class="module"><a href="Cosell.html">Cosell</a></li>
+		
+		<li class="class"><a href="Object.html">Object</a></li>
+		
+	</ul>
+
+	<h2>Methods</h2>
+	<ul>
+		
+			<li><a href="Object.html#M000004">::as_announcement &mdash; Object</a></li>
+		
+			<li><a href="Cosell.html#M000000">::new &mdash; Cosell</a></li>
+		
+			<li><a href="Cosell.html#M000008">#announce &mdash; Cosell</a></li>
+		
+			<li><a href="Cosell.html#M000009">#announce_now! &mdash; Cosell</a></li>
+		
+			<li><a href="Object.html#M000002">#as_announcement &mdash; Object</a></li>
+		
+			<li><a href="Object.html#M000003">#as_announcement_trace &mdash; Object</a></li>
+		
+			<li><a href="Cosell.html#M000012">#initialize_cosell! &mdash; Cosell</a></li>
+		
+			<li><a href="Cosell.html#M000011">#initialize_cosell_if_needed &mdash; Cosell</a></li>
+		
+			<li><a href="Cosell.html#M000013">#kill_queue! &mdash; Cosell</a></li>
+		
+			<li><a href="Cosell.html#M000001">#queue_announcements! &mdash; Cosell</a></li>
+		
+			<li><a href="Cosell.html#M000014">#queue_announcements? &mdash; Cosell</a></li>
+		
+			<li><a href="Cosell.html#M000010">#spy! &mdash; Cosell</a></li>
+		
+			<li><a href="Cosell.html#M000005">#subscribe &mdash; Cosell</a></li>
+		
+			<li><a href="Cosell.html#M000007">#unsubscribe &mdash; Cosell</a></li>
+		
+			<li><a href="Cosell.html#M000006">#when_announcing &mdash; Cosell</a></li>
+		
+	</ul>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+</body>
 </html>

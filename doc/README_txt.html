@@ -1,75 +1,71 @@
-<?xml version="1.0" encoding="iso-8859-1"?>
-<!DOCTYPE html 
-     PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
-  <title>File: README.txt</title>
-  <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-  <meta http-equiv="Content-Script-Type" content="text/javascript" />
-  <link rel="stylesheet" href=".././rdoc-style.css" type="text/css" media="screen" />
-  <script type="text/javascript">
-  // <![CDATA[
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
 
-  function popupCode( url ) {
-    window.open(url, "Code", "resizable=yes,scrollbars=yes,toolbar=no,status=no,height=150,width=400")
-  }
+	<title>File: README.txt [ cosell's cosell-0.0.1 Documentation]</title>
 
-  function toggleCode( id ) {
-    if ( document.getElementById )
-      elem = document.getElementById( id );
-    else if ( document.all )
-      elem = eval( "document.all." + id );
-    else
-      return false;
+	<link type="text/css" media="screen" href="./rdoc.css" rel="stylesheet" />
 
-    elemStyle = elem.style;
-    
-    if ( elemStyle.display != "block" ) {
-      elemStyle.display = "block"
-    } else {
-      elemStyle.display = "none"
-    }
-
-    return true;
-  }
-  
-  // Make codeblocks hidden by default
-  document.writeln( "<style type=\"text/css\">div.method-source-code { display: none }</style>" )
-  
-  // ]]>
-  </script>
-
+	<script src="./js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
 </head>
-<body>
 
+<body class="file">
+	<div id="metadata">
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="./History_txt.html">History.txt</a></li>
+				
+					<li class="file"><a href="./README_txt.html">README.txt</a></li>
+				
+				</ul>
+			</div>
+			
 
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="./images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
 
-  <div id="fileHeader">
-    <h1>README.txt</h1>
-    <table class="header-table">
-    <tr class="top-aligned-row">
-      <td><strong>Path:</strong></td>
-      <td>README.txt
-      </td>
-    </tr>
-    <tr class="top-aligned-row">
-      <td><strong>Last Update:</strong></td>
-      <td>Sat Jul 11 13:27:35 -0400 2009</td>
-    </tr>
-    </table>
-  </div>
-  <!-- banner header -->
+				<ul class="link-list">
+				
+					<li><a href="./Cosell.html">Cosell</a></li>
+				
+					<li><a href="./Object.html">Object</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
 
-  <div id="bodyContent">
+			
+		</div>
+	</div>
 
-
-
-  <div id="contextContent">
-
-    <div id="description">
-      <p>
+	<div id="documentation">
+		<p>
 cosell
 </p>
 <pre>
@@ -78,20 +74,19 @@ cosell
 </pre>
 <h2>DESCRIPTION:</h2>
 <p>
-<a href="../classes/Cosell.html">Cosell</a> is a minimal implementation of
-the &#8216;Announcements&#8217; observer framework, originally introduced
-in VisualWorks Smalltalk 7.4 as a replacement for
-&#8216;triggerEvent&#8217; style of event notification. Instead of
-triggering events identified by symbols, the events are first class
-objects. For rationale, please see the original blog posting by Vassili
-Bykov (refs below).
+<a href="Cosell.html">Cosell</a> is a minimal implementation of the
+&#8216;Announcements&#8217; observer framework, originally introduced in
+VisualWorks Smalltalk 7.4 as a replacement for &#8216;triggerEvent&#8217;
+style of event notification. Instead of triggering events identified by
+symbols, the events are first class objects. For rationale, please see the
+original blog posting by Vassili Bykov (refs below).
 </p>
 <p>
 <b>Lineage</b>
 </p>
 <p>
-This implementation is loosely based on Lukas Renggli&#8216;s tweak of
-Colin Putney&#8216;s Squeak implementation of Vassili Bykov&#8216;s
+This implementation is loosely based on Lukas Renggli&#8217;s tweak of
+Colin Putney&#8217;s Squeak implementation of Vassili Bykov&#8217;s
 Announcements framework for VisualWorks Smalltalk. (Specifically
 Announcements-lr.13.mcz was used as a reference.)
 </p>
@@ -102,15 +97,13 @@ mixed into any object. Also, in this implementation any object (or class)
 can serve as an announcement, so no Announcement class is implemented.
 </p>
 <p>
-<b>The Name &#8216;<a href="../classes/Cosell.html">Cosell</a>&#8216;</b>
+<b>The Name &#8216;Cosell&#8217;</b>
 </p>
 <p>
-I chose the name &#8216;<a href="../classes/Cosell.html">Cosell</a>&#8217;
-because
+I chose the name &#8216;Cosell&#8217; because
 </p>
 <ol>
-<li type="a">Howard <a href="../classes/Cosell.html">Cosell</a> is an iconic event
-announcer
+<li type="a">Howard <a href="Cosell.html">Cosell</a> is an iconic event announcer
 
 </li>
 <li type="a">Googling for &#8216;Ruby Announcements&#8217;, &#8216;Ruby Event
@@ -260,7 +253,7 @@ Framework</a>
 (The MIT License)
 </p>
 <p>
-Copyright (c) 2008
+Copyright &#169; 2008
 </p>
 <p>
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -285,35 +278,13 @@ OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
 USE OR OTHER DEALINGS IN THE SOFTWARE.
 </p>
 
-    </div>
+	</div>
 
-
-   </div>
-
-
-  </div>
-
-
-    <!-- if includes -->
-
-    <div id="section">
-
-
-
-
-
-      
-
-
-    <!-- if method_list -->
-
-
-  </div>
-
-
-<div id="validator-badges">
-  <p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
-</div>
-
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
 </body>
 </html>
+
