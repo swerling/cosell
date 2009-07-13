@@ -83,7 +83,7 @@ module Cosell
       self.initialize_cosell_if_needed
 
       Array(announce_classes).each do |announce_class|
-        raise "Can only subscribe to classes, not an class: #{announce_class}" unless announce_class.is_a?(Class)
+        raise "Can only subscribe to classes. Not a class: #{announce_class}" unless announce_class.is_a?(Class)
         self.subscriptions[announce_class] ||= []
         self.subscriptions[announce_class] << lambda(&block)
       end
@@ -126,11 +126,9 @@ module Cosell
     def announce_now! an_announcement_or_announcement_factory
       announcement = an_announcement_or_announcement_factory.as_announcement
 
-      unless self.subscriptions.empty?
-        self.subscriptions.each do |subscription_type, subscriptions_for_type |
-          if announcement.is_a?(subscription_type)
-            subscriptions_for_type.each{|subscription| subscription.call(announcement) }
-          end
+      self.subscriptions.each do |subscription_type, subscriptions_for_type |
+        if announcement.is_a?(subscription_type)
+          subscriptions_for_type.each{|subscription| subscription.call(announcement) }
         end
       end
 

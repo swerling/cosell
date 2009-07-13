@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+	<meta content="text/html; charset=utf-8" http-equiv="Content-Type" />
+
+	<title>Module: Cosell</title>
+
+	<link rel="stylesheet" href="./rdoc.css" type="text/css" media="screen" />
+
+	<script src="./js/jquery.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/thickbox-compressed.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/quicksearch.js" type="text/javascript"
+		charset="utf-8"></script>
+	<script src="./js/darkfish.js" type="text/javascript"
+		charset="utf-8"></script>
+
+</head>
+<body class="module">
+
+	<div id="metadata">
+		<div id="file-metadata">
+			<div id="file-list-section" class="section">
+				<h3 class="section-header">In Files</h3>
+				<div class="section-body">
+					<ul>
+					
+						<li><a href="./lib/cosell_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/cosell.rb">lib/cosell.rb</a></li>
+					
+						<li><a href="./lib/cosell/announcer_rb.html?TB_iframe=true&amp;height=550&amp;width=785"
+							class="thickbox" title="lib/cosell/announcer.rb">lib/cosell/announcer.rb</a></li>
+					
+					</ul>
+				</div>
+			</div>
+
+			
+		</div>
+
+		<div id="class-metadata">
+
+			<!-- Parent Class -->
+			
+
+			<!-- Namespace Contents -->
+			
+
+			<!-- Method Quickref -->
+			
+			<div id="method-list-section" class="section">
+				<h3 class="section-header">Methods</h3>
+				<ul class="link-list">
+					
+					<li><a href="#M000000">::new</a></li>
+					
+					<li><a href="#M000008">#announce</a></li>
+					
+					<li><a href="#M000009">#announce_now!</a></li>
+					
+					<li><a href="#M000012">#initialize_cosell!</a></li>
+					
+					<li><a href="#M000011">#initialize_cosell_if_needed</a></li>
+					
+					<li><a href="#M000013">#kill_queue!</a></li>
+					
+					<li><a href="#M000001">#queue_announcements!</a></li>
+					
+					<li><a href="#M000014">#queue_announcements?</a></li>
+					
+					<li><a href="#M000010">#spy!</a></li>
+					
+					<li><a href="#M000005">#subscribe</a></li>
+					
+					<li><a href="#M000007">#unsubscribe</a></li>
+					
+					<li><a href="#M000006">#when_announcing</a></li>
+					
+				</ul>
+			</div>
+			
+
+			<!-- Included Modules -->
+			
+		</div>
+
+		<div id="project-metadata">
+			
+			
+			<div id="fileindex-section" class="section project-section">
+				<h3 class="section-header">Files</h3>
+				<ul>
+				
+					<li class="file"><a href="./History_txt.html">History.txt</a></li>
+				
+					<li class="file"><a href="./README_txt.html">README.txt</a></li>
+				
+				</ul>
+			</div>
+			
+
+			<div id="classindex-section" class="section project-section">
+				<h3 class="section-header">Class Index
+					<span class="search-toggle"><img src="./images/find.png"
+						height="16" width="16" alt="[+]"
+						title="show/hide quicksearch" /></span></h3>
+				<form action="#" method="get" accept-charset="utf-8" class="initially-hidden">
+				<fieldset>
+					<legend>Quicksearch</legend>
+					<input type="text" name="quicksearch" value=""
+						class="quicksearch-field" />
+				</fieldset>
+				</form>
+
+				<ul class="link-list">
+				
+					<li><a href="./Cosell.html">Cosell</a></li>
+				
+					<li><a href="./Object.html">Object</a></li>
+				
+				</ul>
+				<div id="no-class-search-results" style="display: none;">No matching classes.</div>
+			</div>
+
+			
+		</div>
+	</div>
+
+	<div id="documentation">
+		<h1 class="module">Cosell</h1>
+
+		<div id="description">
+			
+		</div>
+
+		<!-- Constants -->
+		
+
+		<!-- Attributes -->
+		
+
+		<!-- Methods -->
+		
+		<div id="public-class-method-details" class="method-section section">
+			<h3 class="section-header">Public Class Methods</h3>
+
+		
+			<div id="new-method" class="method-detail ">
+				<a name="M000000"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">new</span><span
+						class="method-args">(*args)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p class="missing-docs">(Not documented)</p>
+					
+
+					
+					<div class="method-source-code"
+						id="new-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 5</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize</span> <span class="ruby-operator">*</span><span class="ruby-identifier">args</span>
+      <span class="ruby-identifier">initialize_cosell!</span>
+      <span class="ruby-keyword kw">super</span>
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+		<div id="public-instance-method-details" class="method-section section">
+			<h3 class="section-header">Public Instance Methods</h3>
+
+		
+			<div id="announce-method" class="method-detail ">
+				<a name="M000008"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">announce</span><span
+						class="method-args">(announcement)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+If queue_announcements? true, puts announcement in a Queue. Otherwise,
+calls announce_now! Queued announcements are announced in a background
+thread in batches (see the initialize method doc for details).
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="announce-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 104</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">announce</span> <span class="ruby-identifier">announcement</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">queue_announcements?</span>
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">announcements_queue</span> <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">announcement</span>
+      <span class="ruby-keyword kw">else</span>
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">announce_now!</span> <span class="ruby-identifier">announcement</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="announce-now--method" class="method-detail ">
+				<a name="M000009"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">announce_now!</span><span
+						class="method-args">(an_announcement_or_announcement_factory)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+First, an announcement is made by calling &#8216;as_announcement&#8217; on
+an_announcement_or_announcement_factory, and subscribers to the
+announcement&#8217;s class are then notified
+</p>
+<p>
+subscribers to this announcer will be filtered to those that match to the
+announcement&#8217;s class, and those subscriptions will be
+&#8216;fired&#8217;. Subscribers should use the &#8216;subscribe&#8217;
+method (also called &#8216;<a
+href="Cosell.html#M000006">when_announcing</a>&#8217;) to configure actions
+to take when a given announcement is made.
+</p>
+<p>
+Typically, an announcement is passed in for an_announcement_factory, in
+which case as_announcement does nothing but return the announcement. But
+any class can override as_announcement to adapt into an anouncement as they
+see fit.
+</p>
+<p>
+(see Cossell::Announcer for full explanation)
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="announce-now--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 126</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">announce_now!</span> <span class="ruby-identifier">an_announcement_or_announcement_factory</span>
+      <span class="ruby-identifier">announcement</span> = <span class="ruby-identifier">an_announcement_or_announcement_factory</span>.<span class="ruby-identifier">as_announcement</span>
+
+      <span class="ruby-keyword kw">unless</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">subscriptions</span>.<span class="ruby-identifier">empty?</span>
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">subscriptions</span>.<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">subscription_type</span>, <span class="ruby-identifier">subscriptions_for_type</span> <span class="ruby-operator">|</span>
+          <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">announcement</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-identifier">subscription_type</span>)
+            <span class="ruby-identifier">subscriptions_for_type</span>.<span class="ruby-identifier">each</span>{<span class="ruby-operator">|</span><span class="ruby-identifier">subscription</span><span class="ruby-operator">|</span> <span class="ruby-identifier">subscription</span>.<span class="ruby-identifier">call</span>(<span class="ruby-identifier">announcement</span>) }
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-keyword kw">return</span> <span class="ruby-identifier">announcement</span> 
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="initialize-cosell--method" class="method-detail ">
+				<a name="M000012"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">initialize_cosell!</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Will blow away any queue, and reset all state. Should not be necessary to
+call this, but left public for testing.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="initialize-cosell--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 171</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_cosell!</span>
+      <span class="ruby-comment cmt"># Using pseudo-scoped var names. </span>
+      <span class="ruby-comment cmt"># Unfortunately cant lazily init these w/out ruby warnings going berzerk in verbose mode,</span>
+      <span class="ruby-comment cmt"># So explicitly declaring them here.</span>
+      <span class="ruby-ivar">@__queue_announcements</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">false</span>
+      <span class="ruby-ivar">@__announcements_queue</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-ivar">@__kill_announcement_queue</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">false</span>
+      <span class="ruby-ivar">@__announcements_thread</span> <span class="ruby-operator">||=</span> <span class="ruby-keyword kw">nil</span>
+      <span class="ruby-ivar">@__subscriptions</span> <span class="ruby-operator">||=</span> {}
+      <span class="ruby-ivar">@__queue_logger</span> <span class="ruby-operator">||=</span> {}
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="initialize-cosell-if-needed-method" class="method-detail ">
+				<a name="M000011"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">initialize_cosell_if_needed</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+lazy initialization of cosell. Optional &#8212; calling this will get rid
+of any subsequent warnings about uninitialized ivs In most cases not
+necessary, and should never have an effect except to get rid of some
+warnings.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="initialize-cosell-if-needed-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 165</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">initialize_cosell_if_needed</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">initialize_cosell!</span> <span class="ruby-keyword kw">if</span> <span class="ruby-ivar">@__subscriptions</span>.<span class="ruby-identifier">nil?</span> 
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="kill-queue--method" class="method-detail ">
+				<a name="M000013"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">kill_queue!</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Kill the announcments queue. This is called automatically if you call
+queue_announcements!, before starting the next announcments thread, so
+it&#8217;s optional. A way of stopping announcments.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="kill-queue--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 186</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">kill_queue!</span>
+      <span class="ruby-ivar">@__kill_announcement_queue</span> = <span class="ruby-keyword kw">true</span>
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="queue-announcements--method" class="method-detail ">
+				<a name="M000001"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">queue_announcements!</span><span
+						class="method-args">(opts = {})</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Place all announcments in a queue, and make announcements in a background
+thread.
+</p>
+<p>
+Options:
+</p>
+<pre>
+   :sleep_time =&gt; how long to sleep (in seconds) after making a batch of announchements
+                  default: 0.01
+   :announcements_per_cycle =&gt; how many announcements to make before sleeping for sleep_time
+                  default: 25
+   :logger =&gt; a logger. Where to log exceptions and warnings.
+</pre>
+<p>
+Note: at the moment, this method may only be called once, and cannot be
+undone. There is no way to interrupt the thread.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="queue-announcements--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 28</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">queue_announcements!</span>(<span class="ruby-identifier">opts</span> = {})
+
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">initialize_cosell_if_needed</span>
+
+      <span class="ruby-comment cmt"># kill off the last queue first</span>
+      <span class="ruby-keyword kw">if</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">announcements_thread</span>
+        <span class="ruby-identifier">kill_queue!</span>
+        <span class="ruby-identifier">sleep</span> <span class="ruby-value">0</span><span class="ruby-value">.01</span>
+        <span class="ruby-identifier">queue_announcements!</span> <span class="ruby-identifier">opts</span>
+      <span class="ruby-keyword kw">end</span>
+
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">should_queue_announcements</span> = <span class="ruby-keyword kw">true</span>
+      <span class="ruby-ivar">@__announcements_queue</span> <span class="ruby-operator">||=</span> <span class="ruby-constant">Queue</span>.<span class="ruby-identifier">new</span>
+
+      <span class="ruby-identifier">how_many_per_cycle</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:announcements_per_cycle</span>] <span class="ruby-operator">||</span> <span class="ruby-value">25</span>
+      <span class="ruby-identifier">cycle_duration</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:sleep_time</span>] <span class="ruby-operator">||</span> <span class="ruby-value">0</span><span class="ruby-value">.01</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">queue_logger</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:logger</span>]
+      <span class="ruby-identifier">count</span> = <span class="ruby-value">0</span>
+
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">announcements_thread</span> = <span class="ruby-constant">Thread</span>.<span class="ruby-identifier">new</span> <span class="ruby-keyword kw">do</span> 
+        <span class="ruby-keyword kw">begin</span>
+          <span class="ruby-identifier">loop</span> <span class="ruby-keyword kw">do</span>
+            <span class="ruby-keyword kw">if</span> <span class="ruby-identifier">queue_killed?</span>
+              <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">kill_announcement_queue</span> = <span class="ruby-keyword kw">false</span>
+              <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">announcements_thread</span> = <span class="ruby-keyword kw">nil</span>
+              <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;Announcement queue killed with #{self.announcements_queue.size} announcements still queued&quot;</span>, <span class="ruby-identifier">:info</span>
+              <span class="ruby-keyword kw">break</span>
+            <span class="ruby-keyword kw">else</span>
+              <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">announce_now!</span> <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">announcements_queue</span>.<span class="ruby-identifier">pop</span>
+              <span class="ruby-identifier">count</span> <span class="ruby-operator">+=</span> <span class="ruby-value">1</span>
+              <span class="ruby-keyword kw">if</span> (<span class="ruby-identifier">count</span><span class="ruby-operator">%</span><span class="ruby-identifier">how_many_per_cycle</span>).<span class="ruby-identifier">eql?</span>(<span class="ruby-value">0</span>)
+                <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;Announcement queue finished batch of #{how_many_per_cycle}, sleeping for #{cycle_duration} sec&quot;</span>, <span class="ruby-identifier">:debug</span>
+                <span class="ruby-identifier">count</span> = <span class="ruby-value">0</span>
+                <span class="ruby-identifier">sleep</span> <span class="ruby-identifier">cycle_duration</span>
+              <span class="ruby-keyword kw">end</span>
+            <span class="ruby-keyword kw">end</span>
+          <span class="ruby-keyword kw">end</span>
+        <span class="ruby-keyword kw">rescue</span> <span class="ruby-constant">Exception</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">x</span>
+          <span class="ruby-identifier">log</span> <span class="ruby-node">&quot;Exception: #{x}, trace: \n\t#{x.backtrace.join(&quot;\n\t&quot;)}&quot;</span>, <span class="ruby-identifier">:error</span>
+        <span class="ruby-keyword kw">end</span>
+      <span class="ruby-keyword kw">end</span>
+
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="queue-announcements--method" class="method-detail ">
+				<a name="M000014"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">queue_announcements?</span><span
+						class="method-args">()</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+return whether annoucements are queued or sent out immediately when the <a
+href="Cosell.html#M000008">announce</a> method is called.
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="queue-announcements--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 191</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">queue_announcements?</span>
+      <span class="ruby-keyword kw">return</span> <span class="ruby-ivar">@__queue_announcements</span>.<span class="ruby-identifier">eql?</span>(<span class="ruby-keyword kw">true</span>)
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="spy--method" class="method-detail ">
+				<a name="M000010"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">spy!</span><span
+						class="method-args">(opts = {})</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Log a message every time this announcer makes an announcement
+</p>
+<p>
+Options:
+</p>
+<pre>
+   :on =&gt; Which class of announcements to spy on. Default is Object (ie. all announcements)
+   :logger =&gt; The log to log to. Default is a logger on STDOUT
+   :level =&gt; The log level to log with. Default is :info
+   :preface =&gt; A message to prepend to all log messages. Default is &quot;Announcement Spy: &quot;
+</pre>
+					
+
+					
+					<div class="method-source-code"
+						id="spy--source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 154</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">spy!</span>(<span class="ruby-identifier">opts</span> = {})
+      <span class="ruby-identifier">on</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:on</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Object</span>
+      <span class="ruby-identifier">logger</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:logger</span>] <span class="ruby-operator">||</span> <span class="ruby-constant">Logger</span>.<span class="ruby-identifier">new</span>(<span class="ruby-constant">STDOUT</span>)
+      <span class="ruby-identifier">level</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:level</span>] <span class="ruby-operator">||</span> <span class="ruby-identifier">:info</span>
+      <span class="ruby-identifier">preface</span> = <span class="ruby-identifier">opts</span>[<span class="ruby-identifier">:preface_with</span>] <span class="ruby-operator">||</span> <span class="ruby-value str">&quot;Announcement Spy: &quot;</span>
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">subscribe</span>(<span class="ruby-identifier">on</span>){<span class="ruby-operator">|</span><span class="ruby-identifier">ann</span><span class="ruby-operator">|</span> <span class="ruby-identifier">logger</span>.<span class="ruby-identifier">send</span>(<span class="ruby-identifier">level</span>, <span class="ruby-node">&quot;#{preface} #{ann.as_announcement_trace}&quot;</span>)}
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="subscribe-method" class="method-detail ">
+				<a name="M000005"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">subscribe</span><span
+						class="method-args">(*announce_classes, &block)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Pass in an anouncement class (or array of announcement classes), along with
+a block defining the action to be taken when an announcment of one of the
+specified classes is announced by this announcer. (see Cossell::Announcer
+for full explanation)
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="subscribe-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 81</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">subscribe</span> <span class="ruby-operator">*</span><span class="ruby-identifier">announce_classes</span>, <span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>
+
+      <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">initialize_cosell_if_needed</span>
+
+      <span class="ruby-constant">Array</span>(<span class="ruby-identifier">announce_classes</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">announce_class</span><span class="ruby-operator">|</span>
+        <span class="ruby-identifier">raise</span> <span class="ruby-node">&quot;Can only subscribe to classes, not an class: #{announce_class}&quot;</span> <span class="ruby-keyword kw">unless</span> <span class="ruby-identifier">announce_class</span>.<span class="ruby-identifier">is_a?</span>(<span class="ruby-constant">Class</span>)
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">subscriptions</span>[<span class="ruby-identifier">announce_class</span>] <span class="ruby-operator">||=</span> []
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">subscriptions</span>[<span class="ruby-identifier">announce_class</span>] <span class="ruby-operator">&lt;&lt;</span> <span class="ruby-identifier">lambda</span>(<span class="ruby-operator">&amp;</span><span class="ruby-identifier">block</span>)
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+				<div class="aliases">
+					Also aliased as: <a href="Cosell.html#M000006">when_announcing</a>
+				</div>
+				
+			</div>
+
+		
+			<div id="unsubscribe-method" class="method-detail ">
+				<a name="M000007"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">unsubscribe</span><span
+						class="method-args">(*announce_classes)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Stop announcing for a given announcement class (or array of classes)
+</p>
+					
+
+					
+					<div class="method-source-code"
+						id="unsubscribe-source">
+<pre>
+<span class="ruby-comment cmt"># File lib/cosell/announcer.rb, line 94</span>
+    <span class="ruby-keyword kw">def</span> <span class="ruby-identifier">unsubscribe</span> <span class="ruby-operator">*</span><span class="ruby-identifier">announce_classes</span>
+      <span class="ruby-constant">Array</span>(<span class="ruby-identifier">announce_classes</span>).<span class="ruby-identifier">each</span> <span class="ruby-keyword kw">do</span> <span class="ruby-operator">|</span><span class="ruby-identifier">announce_class</span><span class="ruby-operator">|</span>
+        <span class="ruby-keyword kw">self</span>.<span class="ruby-identifier">subscriptions</span>.<span class="ruby-identifier">delete</span> <span class="ruby-identifier">announce_class</span>
+      <span class="ruby-keyword kw">end</span>
+    <span class="ruby-keyword kw">end</span></pre>
+					</div>
+					
+				</div>
+
+				
+			</div>
+
+		
+			<div id="when-announcing-method" class="method-detail method-alias">
+				<a name="M000006"></a>
+
+				<div class="method-heading">
+				
+					<span class="method-name">when_announcing</span><span
+						class="method-args">(*announce_classes, &block)</span>
+					<span class="method-click-advice">click to toggle source</span>
+				
+				</div>
+
+				<div class="method-description">
+					
+					<p>
+Alias for <a href="Cosell.html#M000005">subscribe</a>
+</p>
+					
+
+					
+				</div>
+
+				
+			</div>
+
+		
+		</div>
+	
+
+	</div>
+
+
+	<div id="rdoc-debugging-section-dump" class="debugging-section">
+	
+		<p>Disabled; run with --debug to generate this.</p>
+	
+	</div>
+
+	<div id="validator-badges">
+		<p><small><a href="http://validator.w3.org/check/referer">[Validate]</a></small></p>
+		<p><small>Generated with the <a href="http://deveiate.org/projects/Darkfish-Rdoc/">Darkfish
+			Rdoc Generator</a> 1.1.6</small>.</p>
+	</div>
+
+</body>
+</html>
+
