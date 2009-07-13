@@ -29,4 +29,13 @@ PROJ.spec.opts << '--color'
 
 PROJ.rdoc.opts = ["--inline-source"]
 
-# EOF
+namespace :my do
+  namespace :gem do
+    task :package => [:clobber] do
+      sh "rm -rf #{File.join(File.dirname(__FILE__), 'pkg')}"
+      sh "rm -rf #{File.join(File.dirname(__FILE__), 'doc')}"
+      Rake::Task['gem:package'].invoke
+    end
+  end
+end
+
