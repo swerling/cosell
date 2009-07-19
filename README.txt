@@ -4,7 +4,7 @@ cosell
 
 == DESCRIPTION:
 
-Cosell is a minimal implementation of the 'Announcements' observer
+Cosell is a minimal implementation of the 'Announcements' event
 framework, originally introduced in VisualWorks Smalltalk 7.4 as a
 replacement for 'triggerEvent' style of event notification.  Instead of
 triggering events identified by symbols, the events are first class
