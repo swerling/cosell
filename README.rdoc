@@ -23,6 +23,7 @@ in the Smalltalk version is implemented here as a ruby module which can be
 mixed into any object. Also, in this implementation any object (or class)
 can serve as an announcement, so no Announcement class is implemented. 
 
+The ability to queue announcements in the background is built into cosell.
 
 <b>The Name 'Cosell'</b>
 
@@ -36,7 +37,12 @@ b. Googling for 'Ruby Announcements', 'Ruby Event Announcements', etc., produced
 * {Original blog posting describing Announcments by Vassili Bykov}[http://www.cincomsmalltalk.com/userblogs/vbykov/blogView?entry=3310034894]
 * {More info on the Announcements Framework}[http://wiki.squeak.org/squeak/5734]
 
-== FEATURES/PROBLEMS:
+== FEATURE
+
+* Announcements-style event observer framework
+* Easy way to queue events in background
+
+== PROBLEMS
 
 * None known. Should work in ruby 1.8 and 1.9.
 
