@@ -157,8 +157,9 @@ b. Googling for 'Ruby Announcements', 'Ruby Event Announcements', etc., produced
 
 == INSTALL:
 
-* TODO: sudo gem install swerling-cosell
- 
+
+  gem install swerling-cosell --source http://gems.github.com
+
 
 == LICENSE:
 
