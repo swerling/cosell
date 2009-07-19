@@ -40,7 +40,7 @@ b. Googling for 'Ruby Announcements', 'Ruby Event Announcements', etc., produced
 == FEATURE
 
 * Announcements-style event observer framework
-* Easy way to queue events in background
+* Synchronous announcements and asynchronous announcements (using a background thread with a queue)
 
 == PROBLEMS
 
