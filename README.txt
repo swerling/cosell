@@ -4,7 +4,7 @@ cosell
 
 == DESCRIPTION:
 
-Cosell is a minimal implementation of the 'Announcements' event
+Cosell is a minimal implementation of the 'Announcements' observer
 framework, originally introduced in VisualWorks Smalltalk 7.4 as a
 replacement for 'triggerEvent' style of event notification.  Instead of
 triggering events identified by symbols, the events are first class
@@ -158,7 +158,7 @@ b. Googling for 'Ruby Announcements', 'Ruby Event Announcements', etc., produced
 
 (The MIT License)
 
-Copyright (c) 2008 
+Copyright (c) 2009 
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
