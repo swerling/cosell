@@ -41,14 +41,13 @@ b. Googling for 'Ruby Announcements', 'Ruby Event Announcements', etc., produced
 * {More info on the Announcements Framework}[http://wiki.squeak.org/squeak/5734]}
   s.email = %q{sswerling@yahoo.com}
   s.extra_rdoc_files = ["History.txt", "README.rdoc", "README.txt"]
-  s.files = [".gitignore", "History.txt", "README.rdoc", "README.txt", "Rakefile", "example/basic_example.rb", "example/cat_whisperer.rb", "lib/cosell.rb", "lib/cosell/announcer.rb", "lib/cosell/monkey.rb", "spec/cosell_spec.rb", "spec/spec_helper.rb", "test/test_revere.rb"]
+  s.files = [".gitignore", "History.txt", "README.rdoc", "README.txt", "Rakefile", "cosell.gemspec", "example/basic_example.rb", "example/cat_whisperer.rb", "lib/cosell.rb", "lib/cosell/announcer.rb", "lib/cosell/monkey.rb", "spec/cosell_spec.rb", "spec/spec_helper.rb"]
   s.homepage = %q{http://github.com/swerling/TODO}
   s.rdoc_options = ["--inline-source", "--main", "README.txt"]
   s.require_paths = ["lib"]
   s.rubyforge_project = %q{cosell}
   s.rubygems_version = %q{1.3.3}
   s.summary = %q{Cosell is a minimal implementation of the 'Announcements' observer framework, originally introduced in VisualWorks Smalltalk 7}
-  s.test_files = ["test/test_revere.rb"]
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION
