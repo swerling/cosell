@@ -212,7 +212,7 @@ module Cosell
       def kill_announcement_queue= x; @__kill_announcement_queue = x; end
       def should_queue_announcements= x; @__queue_announcements = x; end
       def subscriptions= x; @__subscriptions = x; end
-      def subscriptions; @__subscriptions; end
+      def subscriptions; @__subscriptions ||= []; end
 
       #:startdoc: 
     public
