@@ -148,7 +148,7 @@ module Cosell
     #    :on => Which class of announcements to spy on. Default is Object (ie. all announcements)
     #    :logger => The log to log to. Default is a logger on STDOUT
     #    :level => The log level to log with. Default is :info
-    #    :preface => A message to prepend to all log messages. Default is "Announcement Spy: "
+    #    :preface_with => A message to prepend to all log messages. Default is "Announcement Spy: "
     def spy!(opts = {})
       on = opts[:on] || Object
       logger = opts[:logger] || Logger.new(STDOUT)

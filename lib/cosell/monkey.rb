@@ -15,7 +15,7 @@ class Object
   # When cosell is configured to "spy!", the result of announement.as_announcement_trace is what
   # is sent to the spy log. By default just calls 'to_s'.
   def as_announcement_trace
-    self.to_s
+    self.to_s rescue "(Warning: could not create announcement trace)"
   end
 
   # When a class is used as an announcment, an empty new instance is created using #allocate.
