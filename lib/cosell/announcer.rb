@@ -22,6 +22,9 @@ module Cosell
     #                   default: 25
     #    :logger => a logger. Where to log exceptions and warnings.
     #
+    # WARNING: If you do not pass in a logger, announcement code will fail silently (the queue
+    # is in a background thread).
+    #
     # Note: at the moment, this method may only be called once, and cannot be undone. There is
     # no way to interrupt the thread.
     
@@ -190,6 +193,9 @@ module Cosell
       return @__queue_announcements.eql?(true)
     end
 
+    def subscriptions= x; @__subscriptions = x; end
+    def subscriptions; @__subscriptions ||= []; end
+
     protected
       
       #:stopdoc: 
@@ -211,8 +217,6 @@ module Cosell
       def announcements_thread= x; @__announcements_thread = x; end
       def kill_announcement_queue= x; @__kill_announcement_queue = x; end
       def should_queue_announcements= x; @__queue_announcements = x; end
-      def subscriptions= x; @__subscriptions = x; end
-      def subscriptions; @__subscriptions ||= []; end
 
       #:startdoc: 
     public
