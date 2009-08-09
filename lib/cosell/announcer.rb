@@ -15,12 +15,15 @@ module Cosell
 
     # Place all announcments in a queue, and make announcements in a background thread.
     #
-    # Options:
-    #    :sleep_time => how long to sleep (in seconds) after making a batch of announchements 
-    #                   default: 0.01
-    #    :announcements_per_cycle => how many announcements to make before sleeping for sleep_time
-    #                   default: 25
+    # Arguments:
     #    :logger => a logger. Where to log exceptions and warnings.
+    #               This argument is mandatory -- it is too hard to debug exceptions in announcement 
+    #               handler code without a logger. If you _really_ want your code to fail silently, 
+    #               you will have to create a logger on /dev/null.
+    #    :sleep_time => how long to sleep (in seconds) after making a batch of announchements 
+    #                   optional arg, default: 0.01
+    #    :announcements_per_cycle => how many announcements to make before sleeping for sleep_time
+    #                   optional arg, default: 25
     #
     # WARNING: If you do not pass in a logger, announcement code will fail silently (the queue
     # is in a background thread).
@@ -31,6 +34,13 @@ module Cosell
     def queue_announcements!(opts = {})
 
       self.initialize_cosell_if_needed
+
+      # The logger in mandatory
+      if opts[:logger]
+        self.queue_logger = opts[:logger]
+      else
+        raise "You have to provide a logger, otherwise failures in announcement handler code are to hard to debug"
+      end
 
       # kill off the last queue first
       if self.announcements_thread
@@ -44,18 +54,17 @@ module Cosell
 
       how_many_per_cycle = opts[:announcements_per_cycle] || 25
       cycle_duration = opts[:sleep_time] || 0.01
-      self.queue_logger = opts[:logger]
       count = 0
 
       self.announcements_thread = Thread.new do 
-        begin
-          loop do
-            if queue_killed?
-              self.kill_announcement_queue = false
-              self.announcements_thread = nil
-              log "Announcement queue killed with #{self.announcements_queue.size} announcements still queued", :info
-              break
-            else
+        loop do
+          if queue_killed?
+            self.kill_announcement_queue = false
+            self.announcements_thread = nil
+            log "Announcement queue killed with #{self.announcements_queue.size} announcements still queued", :info
+            break
+          else
+            begin
               self.announce_now! self.announcements_queue.pop
               count += 1
               if (count%how_many_per_cycle).eql?(0)
@@ -63,10 +72,10 @@ module Cosell
                 count = 0
                 sleep cycle_duration
               end
+            rescue Exception => x
+              log "Exception: #{x}, trace: \n\t#{x.backtrace.join("\n\t")}", :error
             end
           end
-        rescue Exception => x
-          log "Exception: #{x}, trace: \n\t#{x.backtrace.join("\n\t")}", :error
         end
       end
 
