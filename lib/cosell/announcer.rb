@@ -39,7 +39,7 @@ module Cosell
       if opts[:logger]
         self.queue_logger = opts[:logger]
       else
-        raise "You have to provide a logger, otherwise failures in announcement handler code are to hard to debug"
+        raise "Cosell error: You have to provide a logger, otherwise failures in announcement handler code are to hard to debug"
       end
 
       # kill off the last queue first
